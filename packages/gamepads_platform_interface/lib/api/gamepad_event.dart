@@ -45,7 +45,7 @@ class GamepadEvent {
 
   @override
   String toString() {
-    return '[$gamepadId] $key: $value';
+    return '[$gamepadId] type:$type key:$key: value:$value';
   }
 
   factory GamepadEvent.parse(Map<dynamic, dynamic> map) {

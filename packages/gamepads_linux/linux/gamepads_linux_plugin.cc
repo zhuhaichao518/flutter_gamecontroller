@@ -43,6 +43,12 @@ static std::string parse_event_type(js_event event) {
 
 static void emit_gamepad_event(gamepad::GamepadInfo* gamepad,
                                const js_event& event) {
+  // TODO:Haichao:(improve this)
+  // For steam deck, it emits analog event frequently when using its default controller.
+  // Add deadzone of 5% for it.
+  if ((event.type & ~JS_EVENT_INIT) == JS_EVENT_AXIS && event.value < 1500 && event.value > -1500){
+    return;
+  }
   if (channel) {
     g_autoptr(FlValue) map = fl_value_new_map();
     fl_value_set_string(map, "gamepadId",
