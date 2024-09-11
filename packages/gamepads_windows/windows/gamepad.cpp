@@ -140,7 +140,8 @@ LRESULT CALLBACK GamepadListenerProc(HWND hwnd,
                                      WPARAM wParam,
                                      LPARAM lParam) {
   switch (uMsg) {
-    case WM_DEVICECHANGE: {
+
+    /*case WM_DEVICECHANGE: {
       if (lParam != NULL) {
         PDEV_BROADCAST_HDR pHdr = (PDEV_BROADCAST_HDR)lParam;
         if (pHdr->dbch_devicetype == DBT_DEVTYP_DEVICEINTERFACE) {
@@ -162,7 +163,7 @@ LRESULT CALLBACK GamepadListenerProc(HWND hwnd,
         }
       }
       return 0;
-    }
+    }*/
     case WM_DESTROY: {
       PostQuitMessage(0);
       return 0;
