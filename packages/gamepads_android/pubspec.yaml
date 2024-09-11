@@ -3,6 +3,7 @@ description: Android implementation of gamepads, a Flutter plugin to handle game
 version: 0.1.2
 homepage: https://github.com/flame-engine/gamepads
 repository: https://github.com/flame-engine/gamepads/tree/main/packages/gamepads_android
+publish_to: none
 
 flutter:
   plugin:
@@ -18,7 +19,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  gamepads_platform_interface: ^0.1.1
+  gamepads_platform_interface:
+    path: ../gamepads_platform_interface
 
 dev_dependencies:
   flame_lint: ^0.2.0

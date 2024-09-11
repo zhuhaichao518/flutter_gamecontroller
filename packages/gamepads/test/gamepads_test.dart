@@ -9,7 +9,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   final calls = <MethodCall>[];
-  const channel = MethodChannel('xyz.luan/gamepads');
+  const channel = MethodChannel('haichaoz/gamepads');
   channel.setMockMethodCallHandler((MethodCall call) async {
     calls.add(call);
     return <GamepadController>[];

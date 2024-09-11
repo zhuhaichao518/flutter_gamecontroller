@@ -2,7 +2,7 @@ library gamepads;
 
 import 'package:gamepads_platform_interface/api/gamepad_controller.dart';
 import 'package:gamepads_platform_interface/api/gamepad_event.dart';
-import 'package:gamepads_platform_interface/gamepads_platform_interface.dart';
+import 'package:gamepads_web/gamepads_web.dart';
 
 class Gamepads {
   Gamepads._();
