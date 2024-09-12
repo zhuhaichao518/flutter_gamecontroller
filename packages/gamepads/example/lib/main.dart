@@ -49,11 +49,15 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() => _lastEvents = []);
   }
 
+  int count = 0;
+
   @override
   void initState() {
     super.initState();
     _subscription = Gamepads.events.listen((event) {
       setState(() {
+        count++;
+        print(count);
         final newEvents = [
           event,
           ..._lastEvents,

@@ -18,11 +18,13 @@ List<GamepadController> getGamepads() {
     final gamepad = getProperty(gamepads, i.toString()); // 使用js_util来获取属性
     if (gamepad != null) {
       // 确保这里的id和name的使用与你的GamepadController构造函数期望的一致
-      controllers.add(GamepadController(id: gamepad.index.toString(), name: gamepad.id));
+      controllers.add(
+          GamepadController(id: gamepad.index.toString(), name: gamepad.id));
     }
   }
   return controllers;
 }
+
 List<dynamic> getGamepadList() {
   return _getGamepads();
 }

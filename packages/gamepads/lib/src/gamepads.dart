@@ -14,7 +14,8 @@ class Gamepads {
   static Stream<GamepadEvent> get events => _platform.gamepadEventsStream;
 
   // ignore: lines_longer_than_80_chars
-  static List<String> get gamepadstates => _platform.getGamepadStatesListString();
+  static List<String> get gamepadstates =>
+      _platform.getGamepadStatesListString();
 
   static Stream<GamepadEvent> eventsByGamepad(String gamepadId) {
     return events.where((event) => event.gamepadId == gamepadId);

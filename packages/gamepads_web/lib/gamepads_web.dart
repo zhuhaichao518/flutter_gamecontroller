@@ -18,7 +18,6 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'gamepad_detector.dart';
 
-
 abstract class GamepadsPlatformInterface extends PlatformInterface {
   static final Object _token = Object();
 
@@ -30,14 +29,13 @@ abstract class GamepadsPlatformInterface extends PlatformInterface {
   /// Platform-specific plugins should set this with their own platform-specific
   /// class that extends [GamepadsPlatformInterface] when they register
   /// themselves.
-  static GamepadsPlatformInterface instance =
-      GamepadsWeb();
+  static GamepadsPlatformInterface instance = GamepadsWeb();
 
   Future<List<GamepadController>> listGamepads();
 
   Stream<GamepadEvent> get gamepadEventsStream;
 
-  List<String> getGamepadStatesListString(){
+  List<String> getGamepadStatesListString() {
     return [];
   }
 
@@ -51,14 +49,15 @@ class GamepadsWeb extends GamepadsPlatformInterface {
   int gamepad_count = 0;
   Timer? _gamepadPollingTimer;
   void _startPollingGamepads() {
-    _gamepadPollingTimer = Timer.periodic(const Duration(milliseconds: 2000), (timer) {
+    _gamepadPollingTimer =
+        Timer.periodic(const Duration(milliseconds: 2000), (timer) {
       // Replace this with your method for checking gamepad state
       getGamepadStatesListString();
     });
   }
 
   /// Constructs a GamepadsWeb
-  GamepadsWeb(){
+  GamepadsWeb() {
     /*html.window.addEventListener('gamepadconnected', (event) {
       _startPollingGamepads();
       getGamepadStatesListString();
@@ -109,17 +108,18 @@ class GamepadsWeb extends GamepadsPlatformInterface {
         if (gamepad.buttons[2].pressed) word |= 0x4000;
         if (gamepad.buttons[3].pressed) word |= 0x8000;
         //}
-         //LT,0-255
+        //LT,0-255
         int bLeftTrigger = gamepad.buttons[6].value * 255; //LT,0-255
         int bRightTrigger = gamepad.buttons[7].value * 255;
 
         int sThumbLX = (gamepad.axes[0] * 32767).toInt(); //-32768 to 32767
-        int sThumbLY = -(gamepad.axes[1] * 32767).toInt(); 
-        int sThumbRX = (gamepad.axes[2] * 32767).toInt(); 
-        int sThumbRY = -(gamepad.axes[3] * 32767).toInt(); 
+        int sThumbLY = -(gamepad.axes[1] * 32767).toInt();
+        int sThumbRX = (gamepad.axes[2] * 32767).toInt();
+        int sThumbRY = -(gamepad.axes[3] * 32767).toInt();
         //int axiscount = gamepad.axes.length;
         //print("xinput: $word $bLeftTrigger $bRightTrigger $sThumbLX $sThumbLY $sThumbRX $sThumbRY ");
-        result.add("xinput: $word $bLeftTrigger $bRightTrigger $sThumbLX $sThumbLY $sThumbRX $sThumbRY ");
+        result.add(
+            "xinput: $word $bLeftTrigger $bRightTrigger $sThumbLX $sThumbLY $sThumbRX $sThumbRY ");
       }
     }
     return result;
