@@ -1,7 +1,4 @@
 // gamepad_detector.dart
-import 'dart:html' as html;
-
-import 'package:flutter/foundation.dart';
 import 'package:js/js.dart';
 import 'package:js/js_util.dart';
 

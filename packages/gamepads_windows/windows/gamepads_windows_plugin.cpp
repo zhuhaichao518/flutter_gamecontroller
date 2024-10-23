@@ -16,7 +16,7 @@ namespace gamepads_windows {
 void GamepadsWindowsPlugin::RegisterWithRegistrar(
     flutter::PluginRegistrarWindows* registrar) {
   channel = std::make_unique<flutter::MethodChannel<flutter::EncodableValue>>(
-      registrar->messenger(), "haichaoz/gamepads",
+      registrar->messenger(), "cloudplayplus/gamepads",
       &flutter::StandardMethodCodec::GetInstance());
 
   auto plugin = std::make_unique<GamepadsWindowsPlugin>(registrar);

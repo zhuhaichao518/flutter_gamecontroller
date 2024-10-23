@@ -14,7 +14,7 @@ public class GamepadsDarwinPlugin: NSObject, FlutterPlugin {
     }
 
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "xyz.luan/gamepads", binaryMessenger: registrar.messenger)
+        let channel = FlutterMethodChannel(name: "cloudplayplus/gamepads", binaryMessenger: registrar.messenger)
         let instance = GamepadsDarwinPlugin(channel: channel)
         registrar.addMethodCallDelegate(instance, channel: channel)
     }

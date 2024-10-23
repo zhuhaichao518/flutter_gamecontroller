@@ -44,36 +44,98 @@ abstract class GamepadsPlatformInterface extends PlatformInterface {
   }
 }
 
+class GamePadState {
+  GamePadState(int length) {
+    keyStates = List<dynamic>.filled(length, null, growable: true);
+    axesStates = List<dynamic>.filled(4, null, growable: true);
+  }
+  
+  List<dynamic>? keyStates;
+  List<dynamic>? axesStates;
+}
+
 /// A web implementation of the GamepadsWebPlatform of the GamepadsWeb plugin.
 class GamepadsWeb extends GamepadsPlatformInterface {
-  int gamepad_count = 0;
+  int _gamepadCount = 0;
   Timer? _gamepadPollingTimer;
-  void _startPollingGamepads() {
-    _gamepadPollingTimer =
-        Timer.periodic(const Duration(milliseconds: 2000), (timer) {
-      // Replace this with your method for checking gamepad state
-      getGamepadStatesListString();
-    });
+  
+  Map<String,GamePadState> lastGamePadstates = {};
+  
+  void updateGamepadsStatus() {
+    final gamepads = getGamepadList(); // 获取游戏手柄列表
+    // 动态获取实际连接的游戏手柄数量
+    for (int i = 0; i < gamepads.length; i++) {
+      final gamepad = getProperty(gamepads, i.toString()); // 使用js_util来获取属性
+      if (gamepad != null) {
+        int buttoncount = gamepad.buttons.length;
+        String gamepadId = gamepad.index.toString();
+        GamePadState lastState;
+        if (lastGamePadstates.containsKey(gamepadId) && lastGamePadstates[gamepadId]?.keyStates?.length == buttoncount){
+          lastState = lastGamePadstates[gamepadId]!;
+        } else {
+          lastGamePadstates[gamepadId] = GamePadState(buttoncount);
+          lastState = lastGamePadstates[gamepadId]!;
+        }
+        for (int i = 0; i < buttoncount; i++) {
+          if (lastState.keyStates?[i] != gamepad.buttons[i].value){
+            lastState.keyStates?[i] = gamepad.buttons[i].value;
+            emitGamepadEvent(GamepadEvent(
+              gamepadId: gamepadId,
+              timestamp: DateTime.now().millisecondsSinceEpoch,
+              type: KeyType.button,
+              key: 'button $i',
+              value: gamepad.buttons[i].value,
+            ));
+          }
+        }
+        for (int i = 0; i < 4; i++) {
+          if (lastState.keyStates?[i] != gamepad.axes[i]){
+            if (gamepad.axes[i]> 0.1 || gamepad.axes[i]< -0.1){
+              lastState.axesStates?[i] = gamepad.axes[i];
+              emitGamepadEvent(GamepadEvent(
+                gamepadId: gamepadId,
+                timestamp: DateTime.now().millisecondsSinceEpoch,
+                type: KeyType.analog,
+                key: 'analog $i',
+                value: gamepad.axes[i],
+              ));
+            }
+          }
+        }
+      }
+    }
   }
 
   /// Constructs a GamepadsWeb
   GamepadsWeb() {
-    /*html.window.addEventListener('gamepadconnected', (event) {
-      _startPollingGamepads();
-      getGamepadStatesListString();
+    html.window.addEventListener('gamepadconnected', (event) {
+      _gamepadCount++;
+      if (_gamepadCount == 1){
+        // The game pad state for web is not event driven. We need to
+        // query the game pad state by ourself.
+        // By default we set the query interval is 1ms. 
+        _gamepadPollingTimer =
+          _gamepadPollingTimer = Timer.periodic(const Duration(milliseconds: 1), (timer) {
+          // Replace this with your method for checking gamepad state
+          updateGamepadsStatus();
+        });
+      }
     });
 
     html.window.addEventListener('gamepaddisconnected', (event) {
-      gamepad_count--;
-      if (gamepad_count == 0){
+      _gamepadCount--;
+      if (_gamepadCount == 0){
         _gamepadPollingTimer?.cancel();
       }
-    });*/
+    });
   }
+  
+  List<GamepadController>? controllers;
 
   @override
   Future<List<GamepadController>> listGamepads() async {
-    return getGamepads();
+    controllers = getGamepads();
+    return controllers!;
   }
 
   @override
@@ -126,16 +188,7 @@ class GamepadsWeb extends GamepadsPlatformInterface {
   }
 
   static void registerWith(Registrar registrar) {
-    //no need for this.
-    //GamepadsPlatformInterface.instance = GamepadsWeb();
-  }
-
-  Future<void> platformCallHandler(MethodCall call) async {
-    switch (call.method) {
-      case 'onGamepadEvent':
-        emitGamepadEvent(GamepadEvent.parse(call.args));
-        break;
-    }
+    GamepadsPlatformInterface.instance = GamepadsWeb();
   }
 
   void emitGamepadEvent(GamepadEvent event) {
