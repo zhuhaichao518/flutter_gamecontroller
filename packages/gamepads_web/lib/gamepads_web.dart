@@ -91,7 +91,7 @@ class GamepadsWeb extends GamepadsPlatformInterface {
         }
         for (int i = 0; i < 4; i++) {
           if (lastState.keyStates?[i] != gamepad.axes[i]) {
-            if (gamepad.axes[i] > 0.1 || gamepad.axes[i] < -0.1) {
+            if (gamepad.axes[i] > 0.15 || gamepad.axes[i] < -0.15) {
               lastState.axesStates?[i] = gamepad.axes[i];
               emitGamepadEvent(GamepadEvent(
                 gamepadId: gamepadId,
