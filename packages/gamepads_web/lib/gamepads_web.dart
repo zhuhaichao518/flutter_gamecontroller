@@ -44,11 +44,16 @@ class GamepadsWeb extends GamepadsPlatformInterface {
       for (var i = 0; i < buttonlist.length; i++) {
         if (lastState.keyStates?[i] != buttonlist[i].value) {
           lastState.keyStates?[i] = buttonlist[i].value;
+          KeyType type = KeyType.button;
+          //left shoulder & right shoulder
+          if (i == 6 || i == 7) {
+            type = KeyType.analog;
+          }
           emitGamepadEvent(
             GamepadEvent(
               gamepadId: gamepadId,
               timestamp: DateTime.now().millisecondsSinceEpoch,
-              type: KeyType.button,
+              type: type,
               key: 'button $i',
               value: buttonlist[i].value,
             ),
