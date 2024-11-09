@@ -49,7 +49,7 @@ class GamePadState {
     keyStates = List<dynamic>.filled(length, null, growable: true);
     axesStates = List<dynamic>.filled(4, null, growable: true);
   }
-  
+
   List<dynamic>? keyStates;
   List<dynamic>? axesStates;
 }
@@ -58,9 +58,9 @@ class GamePadState {
 class GamepadsWeb extends GamepadsPlatformInterface {
   int _gamepadCount = 0;
   Timer? _gamepadPollingTimer;
-  
-  Map<String,GamePadState> lastGamePadstates = {};
-  
+
+  Map<String, GamePadState> lastGamePadstates = {};
+
   void updateGamepadsStatus() {
     final gamepads = getGamepadList(); // 获取游戏手柄列表
     // 动态获取实际连接的游戏手柄数量
@@ -70,14 +70,15 @@ class GamepadsWeb extends GamepadsPlatformInterface {
         int buttoncount = gamepad.buttons.length;
         String gamepadId = gamepad.index.toString();
         GamePadState lastState;
-        if (lastGamePadstates.containsKey(gamepadId) && lastGamePadstates[gamepadId]?.keyStates?.length == buttoncount){
+        if (lastGamePadstates.containsKey(gamepadId) &&
+            lastGamePadstates[gamepadId]?.keyStates?.length == buttoncount) {
           lastState = lastGamePadstates[gamepadId]!;
         } else {
           lastGamePadstates[gamepadId] = GamePadState(buttoncount);
           lastState = lastGamePadstates[gamepadId]!;
         }
         for (int i = 0; i < buttoncount; i++) {
-          if (lastState.keyStates?[i] != gamepad.buttons[i].value){
+          if (lastState.keyStates?[i] != gamepad.buttons[i].value) {
             lastState.keyStates?[i] = gamepad.buttons[i].value;
             emitGamepadEvent(GamepadEvent(
               gamepadId: gamepadId,
@@ -89,8 +90,8 @@ class GamepadsWeb extends GamepadsPlatformInterface {
           }
         }
         for (int i = 0; i < 4; i++) {
-          if (lastState.keyStates?[i] != gamepad.axes[i]){
-            if (gamepad.axes[i]> 0.1 || gamepad.axes[i]< -0.1){
+          if (lastState.keyStates?[i] != gamepad.axes[i]) {
+            if (gamepad.axes[i] > 0.1 || gamepad.axes[i] < -0.1) {
               lastState.axesStates?[i] = gamepad.axes[i];
               emitGamepadEvent(GamepadEvent(
                 gamepadId: gamepadId,
@@ -110,12 +111,12 @@ class GamepadsWeb extends GamepadsPlatformInterface {
   GamepadsWeb() {
     html.window.addEventListener('gamepadconnected', (event) {
       _gamepadCount++;
-      if (_gamepadCount == 1){
+      if (_gamepadCount == 1) {
         // The game pad state for web is not event driven. We need to
         // query the game pad state by ourself.
-        // By default we set the query interval is 1ms. 
-        _gamepadPollingTimer =
-          _gamepadPollingTimer = Timer.periodic(const Duration(milliseconds: 1), (timer) {
+        // By default we set the query interval is 1ms.
+        _gamepadPollingTimer = _gamepadPollingTimer =
+            Timer.periodic(const Duration(milliseconds: 1), (timer) {
           // Replace this with your method for checking gamepad state
           updateGamepadsStatus();
         });
@@ -124,12 +125,12 @@ class GamepadsWeb extends GamepadsPlatformInterface {
 
     html.window.addEventListener('gamepaddisconnected', (event) {
       _gamepadCount--;
-      if (_gamepadCount == 0){
+      if (_gamepadCount == 0) {
         _gamepadPollingTimer?.cancel();
       }
     });
   }
-  
+
   List<GamepadController>? controllers;
 
   @override
