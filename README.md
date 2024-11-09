@@ -1,7 +1,7 @@
 # gamepads
 
 <p align="center">
-  A Flutter plugin to handle gamepad input across multiple platforms. Froked from gamepads and add web implementation.
+  A Flutter plugin to handle gamepad input across multiple platforms.
 </p>
 
 <p align="center">

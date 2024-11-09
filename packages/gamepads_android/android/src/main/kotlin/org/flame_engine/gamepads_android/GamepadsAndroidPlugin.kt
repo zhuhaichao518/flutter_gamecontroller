@@ -37,7 +37,7 @@ class GamepadsAndroidPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
 
   // FlutterPlugin
   override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "cloudplayplus/gamepads")
+    channel = MethodChannel(flutterPluginBinding.binaryMessenger, "xyz.luan/gamepads")
     channel.setMethodCallHandler(this)
   }
 

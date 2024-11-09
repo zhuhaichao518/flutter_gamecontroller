@@ -9,7 +9,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   final calls = <MethodCall>[];
-  const channel = MethodChannel('cloudplayplus/gamepads');
+  const channel = MethodChannel('xyz.luan/gamepads');
   channel.setMockMethodCallHandler((MethodCall call) async {
     calls.add(call);
     return <GamepadController>[];
