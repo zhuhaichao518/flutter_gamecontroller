@@ -89,7 +89,7 @@ class GamepadsWeb extends GamepadsPlatformInterface {
           // query the game pad state by ourself.
           // By default we set the query interval is 1ms.
           _gamepadPollingTimer =
-              Timer.periodic(const Duration(milliseconds: 1), (timer) {
+              Timer.periodic(const Duration(milliseconds: 4), (timer) {
             updateGamepadsStatus();
           });
         }
