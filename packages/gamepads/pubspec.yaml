@@ -16,8 +16,8 @@ flutter:
         default_package: gamepads_linux
       macos:
         default_package: gamepads_darwin
-      windows:
-        default_package: gamepads_windows
+      #windows:
+      #  default_package: gamepads_windows
       web:
         default_package: gamepads_web
 
@@ -35,7 +35,7 @@ dependencies:
   gamepads_platform_interface: ^0.1.2+1
   gamepads_web:
     path: ../gamepads_web
-  gamepads_windows: ^0.1.1+3
+  #gamepads_windows: ^0.1.1+3
 
 dev_dependencies:
   flame_lint: ^0.2.0
