@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:gamepads/gamepads.dart';
+import 'package:gamepads_example/xbox_assember.dart';
 
 void main() {
   runApp(const MyApp());
@@ -53,6 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _subscription = Gamepads.events.listen((event) {
+      CGamepadController.onEvent(event);
+
       setState(() {
         final newEvents = [
           event,
@@ -101,6 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Text('${gamepad.id} - ${gamepad.name}'),
                 Text('  Analog inputs: ${gamepad.state.analogInputs}'),
                 Text('  Button inputs: ${gamepad.state.buttonInputs}'),
+                Text('latest info: ${CGamepadController.latestevent}'),
               ],
             ],
           ],
