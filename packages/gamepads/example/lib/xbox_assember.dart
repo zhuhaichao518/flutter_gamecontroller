@@ -166,7 +166,7 @@ class CGamepadState {
             int oldValue = analogs[mapped];
             analogs[mapped] = (event.value * 32767).toInt();
             // 防止触发太频繁，设置3% gap
-            //if ((analogs[mapped] - oldValue).abs() < 100) return false;
+            if ((analogs[mapped] - oldValue).abs() < 100) return false;
             if (kIsWeb &&
                 (mapped == sThumbLY || mapped == sThumbRY)) {
               analogs[mapped] = -analogs[mapped];
