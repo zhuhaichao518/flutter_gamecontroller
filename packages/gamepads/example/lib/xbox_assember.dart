@@ -167,8 +167,7 @@ class CGamepadState {
             analogs[mapped] = (event.value * 32767).toInt();
             // 防止触发太频繁，设置3% gap
             if ((analogs[mapped] - oldValue).abs() < 100) return false;
-            if (kIsWeb &&
-                (mapped == sThumbLY || mapped == sThumbRY)) {
+            if (kIsWeb && (mapped == sThumbLY || mapped == sThumbRY)) {
               analogs[mapped] = -analogs[mapped];
             }
           }
@@ -222,7 +221,7 @@ class CGamepadState {
 
 class CGamepadController {
   static Map<String, CGamepadState> gamepadstates = {};
-  static String latestevent="";
+  static String latestevent = "";
 
   static void onEvent(GamepadEvent event) {
     CGamepadState state;
