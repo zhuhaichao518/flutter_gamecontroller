@@ -28,7 +28,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  gamepads_android: ^0.1.2+2
+  gamepads_android:
+    path: ../gamepads_android
   gamepads_darwin: ^0.1.2+2
   gamepads_ios: ^0.1.2+2
   gamepads_linux: ^0.1.1+3
