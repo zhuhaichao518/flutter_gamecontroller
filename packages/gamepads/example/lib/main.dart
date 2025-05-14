@@ -54,6 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     _subscription = Gamepads.events.listen((event) {
+      if (_gamepads.isNotEmpty && _gamepads[0].name == "uinput-goodix") {
+        CGamepadController.ignore_first = true;
+      }
       CGamepadController.onEvent(event);
 
       setState(() {
