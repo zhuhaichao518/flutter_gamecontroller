@@ -146,9 +146,8 @@ class CGamepadState {
     'KEYCODE_BUTTON_THUMBR': XINPUT_GAMEPAD_RIGHT_THUMB,
     'AXIS_HAT_X': XINPUT_GAMEPAD_DPAD_LEFT,
     'AXIS_HAT_Y': XINPUT_GAMEPAD_DPAD_UP,
-    'KEYCODE_BUTTON_L1' : XINPUT_GAMEPAD_LEFT_SHOULDER,
-    'KEYCODE_BUTTON_R1' : XINPUT_GAMEPAD_RIGHT_SHOULDER,
-    
+    'KEYCODE_BUTTON_L1': XINPUT_GAMEPAD_LEFT_SHOULDER,
+    'KEYCODE_BUTTON_R1': XINPUT_GAMEPAD_RIGHT_SHOULDER,
   };
 
   final Map<String, int> analogMapping = {
@@ -214,8 +213,7 @@ class CGamepadState {
             int newValue = (event.value * 32767).toInt();
             if ((newValue - oldValue).abs() < 100) return false;
             analogs[mapped] = newValue;
-            if (kIsWeb &&
-                (mapped == sThumbLY || mapped == sThumbRY)) {
+            if (kIsWeb && (mapped == sThumbLY || mapped == sThumbRY)) {
               analogs[mapped] = -analogs[mapped];
             }
           }
@@ -253,8 +251,7 @@ class CGamepadState {
         break;
       case KeyType.button:
         //special case for web.
-        if (kIsWeb &&
-            (event.key == 'button 6' || event.key == 'button 7')) {
+        if (kIsWeb && (event.key == 'button 6' || event.key == 'button 7')) {
           final mapped = analogMapping[event.key];
           int newValue = (event.value * 255).toInt();
           int oldValue = analogs[mapped!];
