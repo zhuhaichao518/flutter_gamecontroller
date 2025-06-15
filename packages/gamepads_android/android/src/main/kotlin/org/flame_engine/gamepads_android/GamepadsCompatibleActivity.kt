@@ -10,8 +10,8 @@ interface GamepadsCompatibleActivity {
     fun isGamepadsInputDevice(device: InputDevice): Boolean {
         return (device.sources and InputDevice.SOURCE_GAMEPAD == InputDevice.SOURCE_GAMEPAD ||
                 device.sources and InputDevice.SOURCE_JOYSTICK == InputDevice.SOURCE_JOYSTICK) &&
-                (device.sources and InputDevice.SOURCE_MOUSE == 0) &&
-                (device.sources and InputDevice.SOURCE_KEYBOARD == 0)
+                (device.sources and InputDevice.SOURCE_MOUSE != InputDevice.SOURCE_MOUSE) /*&&
+                (device.sources and InputDevice.SOURCE_KEYBOARD != InputDevice.SOURCE_KEYBOARD)*/
     }
 
     fun registerInputDeviceListener(listener: InputManager.InputDeviceListener, handler: Handler?)
