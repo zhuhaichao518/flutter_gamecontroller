@@ -25,6 +25,7 @@ class GamepadsAndroidPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
   private lateinit var channel : MethodChannel
   private lateinit var devices : DeviceListener
   private lateinit var events : EventListener
+  private var activity: Activity? = null
 
   private fun listGamepads(): List<Map<String, String>>  {
     return devices.getDevices().map { device ->
@@ -46,15 +47,19 @@ class GamepadsAndroidPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
   }
 
   override fun onMethodCall(call: MethodCall, result: Result) {
-    if (call.method == "listGamepads") {
-      result.success(listGamepads())
-    } else {
-      result.notImplemented()
+    when (call.method) {
+      "listGamepads" -> {
+        result.success(listGamepads())
+      }
+      else -> {
+        result.notImplemented()
+      }
     }
   }
 
   // Activity Aware
   override fun onAttachedToActivity(activityPluginBinding: ActivityPluginBinding) {
+    activity = activityPluginBinding.activity
     onAttachedToActivityShared(activityPluginBinding.activity)
   }
 
@@ -64,14 +69,16 @@ class GamepadsAndroidPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     events = EventListener()
     compatibleActivity.registerInputDeviceListener(devices, handler = null)
     compatibleActivity.registerKeyEventHandler { event ->
-      if (devices.containsKey(event.deviceId)) {
+      val device = InputDevice.getDevice(event.deviceId)
+      if (device != null && devices.containsKey(event.deviceId)) {
         events.onKeyEvent(event, channel)
       } else {
         false
       }
-     }
+    }
     compatibleActivity.registerMotionEventHandler { event ->
-      if (devices.containsKey(event.deviceId)) {
+      val device = InputDevice.getDevice(event.deviceId)
+      if (device != null && devices.containsKey(event.deviceId)) {
         events.onMotionEvent(event, channel)
       } else {
         false
@@ -80,11 +87,11 @@ class GamepadsAndroidPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
   }
 
   override fun onDetachedFromActivity() {
-    // No-op
+    activity = null
   }
 
   override fun onDetachedFromActivityForConfigChanges() {
-    // No-op
+    activity = null
   }
 
   override fun onReattachedToActivityForConfigChanges(activityPluginBinding: ActivityPluginBinding) {
