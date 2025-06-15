@@ -8,10 +8,10 @@ import android.view.MotionEvent
 
 interface GamepadsCompatibleActivity {
     fun isGamepadsInputDevice(device: InputDevice): Boolean {
-        return (device.sources and InputDevice.SOURCE_GAMEPAD == InputDevice.SOURCE_GAMEPAD ||
+            return (device.sources and InputDevice.SOURCE_GAMEPAD == InputDevice.SOURCE_GAMEPAD ||
                 device.sources and InputDevice.SOURCE_JOYSTICK == InputDevice.SOURCE_JOYSTICK) &&
-                (device.sources and InputDevice.SOURCE_MOUSE != InputDevice.SOURCE_MOUSE) /*&&
-                (device.sources and InputDevice.SOURCE_KEYBOARD != InputDevice.SOURCE_KEYBOARD)*/
+                //(device.sources and InputDevice.SOURCE_MOUSE != InputDevice.SOURCE_MOUSE) &&
+                (device.keyboardType != 2) //PREDICTIVE
     }
 
     fun registerInputDeviceListener(listener: InputManager.InputDeviceListener, handler: Handler?)
