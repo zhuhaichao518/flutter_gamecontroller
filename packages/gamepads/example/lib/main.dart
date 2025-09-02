@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:gamepads/gamepads.dart';
-import 'package:gamepads_example/xbox_assember.dart';
+import 'xbox_assember.dart';
 
 void main() {
   runApp(const MyApp());
