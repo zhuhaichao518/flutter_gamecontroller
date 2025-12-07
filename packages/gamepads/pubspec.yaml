@@ -36,8 +36,8 @@ dependencies:
   gamepads_platform_interface: ^0.1.2+1
   gamepads_web:
     path: ../gamepads_web
-  gamepads_windows:
-    path: ../gamepads_windows
+  #gamepads_windows:
+  #  path: ../gamepads_windows
 
 dev_dependencies:
   flame_lint: ^0.2.0
